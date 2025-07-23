@@ -58,7 +58,7 @@ export default function Sidebar() {
         >
           <div className="flex flex-col h-full overflow-x-hidden">
             <div className="flex-grow flex flex-col min-w-[235px]">
-              <div className="relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[10px] overflow-y-scroll no-scroll">
+              <div className="relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[0px] overflow-y-scroll no-scroll">
                 <div className="flex flex-col gap-y-2 pb-[60px] gap-y-[14px] overflow-y-scroll no-scroll">
                   <SearchBox user={user} showNewWsModal={showNewWsModal} />
                   <ActiveWorkspaces />

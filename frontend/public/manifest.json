@@ -1,0 +1,25 @@
+{
+  "theme_color": "#f0f0f0",
+  "background_color": "#333333",
+  "icons": [
+    {
+      "src": "Neat.AI.round-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "Neat.AI.round-gray-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "orientation": "any",
+  "display": "standalone",
+  "dir": "auto",
+  "lang": "en-US",
+  "name": "Neat.ai",
+  "id": "http://localhost:3001",
+  "start_url": "http://localhost:3001",
+  "scope": "http://localhost:3001"
+}

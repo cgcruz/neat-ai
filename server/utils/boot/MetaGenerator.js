@@ -45,87 +45,39 @@ class MetaGenerator {
       {
         tag: "title",
         props: null,
-        content: "AnythingLLM | Your personal LLM trained on anything",
+        content: "Neat.AI",
       },
 
       {
         tag: "meta",
         props: {
           name: "title",
-          content: "AnythingLLM | Your personal LLM trained on anything",
+          content: "Neat.AI",
         },
       },
       {
         tag: "meta",
         props: {
           description: "title",
-          content: "AnythingLLM | Your personal LLM trained on anything",
-        },
-      },
-
-      // <!-- Facebook -->
-      { tag: "meta", props: { property: "og:type", content: "website" } },
-      {
-        tag: "meta",
-        props: { property: "og:url", content: "https://anythingllm.com" },
-      },
-      {
-        tag: "meta",
-        props: {
-          property: "og:title",
-          content: "AnythingLLM | Your personal LLM trained on anything",
-        },
-      },
-      {
-        tag: "meta",
-        props: {
-          property: "og:description",
-          content: "AnythingLLM | Your personal LLM trained on anything",
-        },
-      },
-      {
-        tag: "meta",
-        props: {
-          property: "og:image",
-          content:
-            "https://raw.githubusercontent.com/Mintplex-Labs/anything-llm/master/images/promo.png",
-        },
-      },
-
-      // <!-- Twitter -->
-      {
-        tag: "meta",
-        props: { property: "twitter:card", content: "summary_large_image" },
-      },
-      {
-        tag: "meta",
-        props: { property: "twitter:url", content: "https://anythingllm.com" },
-      },
-      {
-        tag: "meta",
-        props: {
-          property: "twitter:title",
-          content: "AnythingLLM | Your personal LLM trained on anything",
-        },
-      },
-      {
-        tag: "meta",
-        props: {
-          property: "twitter:description",
-          content: "AnythingLLM | Your personal LLM trained on anything",
-        },
-      },
-      {
-        tag: "meta",
-        props: {
-          property: "twitter:image",
-          content:
-            "https://raw.githubusercontent.com/Mintplex-Labs/anything-llm/master/images/promo.png",
+          content: "Neat.AI",
         },
       },
 
       { tag: "link", props: { rel: "icon", href: "/favicon.png" } },
-      { tag: "link", props: { rel: "apple-touch-icon", href: "/favicon.png" } },
+      { tag: "link", props: { rel: "apple-touch-icon", href: "/Neat.AI.round-512.png" } },
+      // PWA tags
+      {
+        tag: "meta",
+        props: { name: "mobile-web-app-capable", content: "yes" },
+      },
+      {
+        tag: "meta",
+        props: {
+          name: "apple-mobile-web-app-status-bar-style",
+          content: "black-translucent",
+        },
+      },
+      { tag: "link", props: { rel: "manifest", href: "/manifest.json" } },
     ];
   }
 
@@ -168,10 +120,19 @@ class MetaGenerator {
   async #fetchConfg() {
     this.#log(`fetching custom meta tag settings...`);
     const { SystemSettings } = require("../../models/systemSettings");
-    const customTitle = await SystemSettings.getValueOrFallback(
+
+    let customTitle = await SystemSettings.getValueOrFallback(
       { label: "meta_page_title" },
       null
     );
+
+    if (!customTitle) {
+      customTitle = await SystemSettings.getValueOrFallback(
+        { label: "custom_app_name" },
+        null
+      );
+    }
+
     const faviconURL = await SystemSettings.getValueOrFallback(
       { label: "meta_page_favicon" },
       null
@@ -181,19 +142,78 @@ class MetaGenerator {
     if (customTitle === null && faviconURL === null) {
       this.#customConfig = this.#defaultMeta();
     } else {
-      this.#customConfig = [
-        {
-          tag: "link",
-          props: { rel: "icon", href: this.#validUrl(faviconURL) },
-        },
-        {
-          tag: "title",
-          props: null,
-          content:
-            customTitle ??
-            "AnythingLLM | Your personal LLM trained on anything",
-        },
-      ];
+// When custom settings exist, include all default meta tags but override specific ones
+      this.#customConfig = this.#defaultMeta().map((tag) => {
+        // Override favicon link
+        if (tag.tag === "link" && tag.props?.rel === "icon") {
+          return {
+            tag: "link",
+            props: { rel: "icon", href: this.#validUrl(faviconURL) },
+          };
+        }
+        // Override page title
+        if (tag.tag === "title") {
+          return {
+            tag: "title",
+            props: null,
+            content:
+              customTitle ??
+              "AnythingLLM | Your personal LLM trained on anything",
+          };
+        }
+        // Override meta title
+        if (tag.tag === "meta" && tag.props?.name === "title") {
+          return {
+            tag: "meta",
+            props: {
+              name: "title",
+              content:
+                customTitle ??
+                "AnythingLLM | Your personal LLM trained on anything",
+            },
+          };
+        }
+        // Override og:title
+        if (tag.tag === "meta" && tag.props?.property === "og:title") {
+          return {
+            tag: "meta",
+            props: {
+              property: "og:title",
+              content:
+                customTitle ??
+                "AnythingLLM | Your personal LLM trained on anything",
+            },
+          };
+        }
+        // Override twitter:title
+        if (tag.tag === "meta" && tag.props?.property === "twitter:title") {
+          return {
+            tag: "meta",
+            props: {
+              property: "twitter:title",
+              content:
+                customTitle ??
+                "AnythingLLM | Your personal LLM trained on anything",
+            },
+          };
+        }
+        // Override apple-touch-icon if custom favicon is set
+        if (
+          tag.tag === "link" &&
+          tag.props?.rel === "apple-touch-icon" &&
+          faviconURL
+        ) {
+          return {
+            tag: "link",
+            props: {
+              rel: "apple-touch-icon",
+              href: this.#validUrl(faviconURL),
+            },
+          };
+        }
+        // Return original tag for everything else (including PWA tags)
+        return tag;
+      });
     }
 
     return this.#customConfig;

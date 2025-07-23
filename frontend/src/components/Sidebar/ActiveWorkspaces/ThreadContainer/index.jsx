@@ -124,7 +124,7 @@ export default function ThreadContainer({ workspace }) {
     : 0;
 
   return (
-    <div className="flex flex-col" role="list" aria-label="Threads">
+    <div className="flex flex-col pt-2" role="list" aria-label="Threads">
       <ThreadItem
         idx={0}
         activeIdx={activeThreadIdx}
