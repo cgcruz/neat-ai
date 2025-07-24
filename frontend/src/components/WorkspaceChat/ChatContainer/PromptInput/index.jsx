@@ -239,7 +239,7 @@ export default function PromptInput({
   }
 
   return (
-    <div className="w-full fixed md:absolute bottom-0 left-0 z-10 md:z-0 flex justify-center items-center">
+    <div className="w-full fixed md:absolute bottom-2 left-0 z-10 md:z-0 flex justify-center items-center">
       <SlashCommands
         showing={showSlashCommand}
         setShowing={setShowSlashCommand}

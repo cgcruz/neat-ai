@@ -120,7 +120,7 @@ export default function ActiveWorkspaces() {
                             {user?.role !== "default" && (
                               <div
                                 {...provided.dragHandleProps}
-                                className="cursor-grab mr-[3px]"
+                                className="cursor-grab"
                               >
                                 <DotsSixVertical
                                   size={20}
@@ -129,7 +129,7 @@ export default function ActiveWorkspaces() {
                                 />
                               </div>
                             )}
-                            <div className="flex items-center space-x-2 overflow-hidden flex-grow">
+                            <div className="flex items-center space-x-2 ml-[8px] overflow-hidden flex-grow">
                               <div className="w-[130px] overflow-hidden">
                                 <p
                                   className={`
