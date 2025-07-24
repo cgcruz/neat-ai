@@ -64,7 +64,10 @@ class MetaGenerator {
       },
 
       { tag: "link", props: { rel: "icon", href: "/favicon.png" } },
-      { tag: "link", props: { rel: "apple-touch-icon", href: "/Neat.AI.round-512.png" } },
+      {
+        tag: "link",
+        props: { rel: "apple-touch-icon", href: "/icon512.png" },
+      },
       // PWA tags
       {
         tag: "meta",
