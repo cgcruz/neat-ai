@@ -1,11 +1,12 @@
 name: anythingllm
 
 networks:
-  anything-llm:
-    driver: bridge
+  neat-network:
+    external: true
 
 services:
   anything-llm:
+    restart: unless-stopped
     container_name: anythingllm
     build:
       context: ../.
@@ -26,6 +27,6 @@ services:
     env_file:
       - .env
     networks:
-      - anything-llm
+      - neat-network
     extra_hosts:
       - "host.docker.internal:host-gateway"

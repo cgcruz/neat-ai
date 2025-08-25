@@ -1,8 +1,8 @@
 import React from "react";
 import QuickLinks from "./QuickLinks";
 import ExploreFeatures from "./ExploreFeatures";
-import Updates from "./Updates";
-import Resources from "./Resources";
+// import Updates from "./Updates";
+// import Resources from "./Resources";
 import Checklist from "./Checklist";
 import { isMobile } from "react-device-detect";
 
@@ -17,8 +17,10 @@ export default function Home() {
           <Checklist />
           <QuickLinks />
           <ExploreFeatures />
+          {/*
           <Updates />
           <Resources />
+          */}
         </div>
       </div>
     </div>

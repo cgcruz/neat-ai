@@ -281,9 +281,10 @@ export default function MultiUserAuth() {
   return (
     <>
       <form onSubmit={handleLogin}>
-        <div className="flex flex-col justify-center items-center relative rounded-2xl bg-theme-bg-secondary md:shadow-[0_4px_14px_rgba(0,0,0,0.25)] md:px-12 py-12 -mt-4 md:mt-0">
-          <div className="flex items-start justify-between pt-11 pb-9 rounded-t">
+        <div className="flex flex-col justify-center items-center relative rounded-2xl bg-theme-bg-secondary md:shadow-[0_4px_14px_rgba(0,0,0,0.25)] md:px-12 pt-12 pb-0 -mt-4 md:mt-0">
+          <div className="flex items-start justify-between pt-11 pb-10 rounded-t">
             <div className="flex items-center flex-col gap-y-4">
+              {/*
               <div className="flex gap-x-1">
                 <h3 className="text-md md:text-2xl font-bold text-white text-center white-space-nowrap hidden md:block">
                   {t("login.multi-user.welcome")}
@@ -292,7 +293,8 @@ export default function MultiUserAuth() {
                   {customAppName || "AnythingLLM"}
                 </p>
               </div>
-              <p className="text-sm text-theme-text-secondary text-center">
+              -*/}
+              <p className="text-sm text-theme-text-secondary text-center mt-8">
                 {t("login.sign-in.start")} {customAppName || "AnythingLLM"}{" "}
                 {t("login.sign-in.end")}
               </p>

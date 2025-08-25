@@ -59,5 +59,12 @@
     "Zilliz"
   ],
   "eslint.experimental.useFlatConfig": true,
-  "docker.languageserver.formatter.ignoreMultilineInstructions": true
+  "docker.languageserver.formatter.ignoreMultilineInstructions": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  }
 }
